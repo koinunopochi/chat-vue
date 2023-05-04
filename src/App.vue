@@ -7,7 +7,6 @@ import SetUpParm from './components/SetUpParm.vue';
   <div class="wrap">
     <TheHeader />
     <SetUpParm />
-    <main class="main">main</main>
     <TheFooter />
   </div>
 </template>

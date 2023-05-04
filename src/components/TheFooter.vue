@@ -1,6 +1,6 @@
 <template>
   <footer class="footer">
-    <small>&copy;my-vite-todo</small><!--&copy=©-->
+    <small>&copy;子犬のぽち</small><!--&copy=©-->
   </footer>
 </template>
 
