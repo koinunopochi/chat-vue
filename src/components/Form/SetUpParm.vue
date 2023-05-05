@@ -170,19 +170,11 @@ export default {
 };
 </script>
 <style scoped>
-/* 全体のスタイル */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  margin: 0;
-  padding: 0;
-}
 /* フォームのスタイル */
 form {
-  background-color: #ffffff;
   width: 300px;
   padding: 30px;
-  padding-bottom: 80px; /**ここで、ボタンがはみ出るかどうかの調整 */
+  padding-bottom: 30px; /**ここで、ボタンがはみ出るかどうかの調整 */
   margin: 50px auto;
   margin-left: 20px;
   border-radius: 10px;

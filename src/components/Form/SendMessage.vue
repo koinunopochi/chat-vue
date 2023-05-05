@@ -1,11 +1,22 @@
-<script setup>
-defineProps({
-  question: String,
-  messages: String
-})
+<script>
+import { defineComponent } from 'vue';
 
-defineEmits(['update:question', 'update:messages'])
+export default defineComponent({
+  props: {
+    question: String,
+    messages: String,
+  },
+  emits: ['update:question', 'update:messages'],
+  setup(_, { emit }) {
+    const clearInput = (inputName) => {
+      emit('update:' + inputName, '');
+    };
+
+    return { clearInput };
+  },
+});
 </script>
+
 <template>
   <div id="app">
     <form>
@@ -23,7 +34,7 @@ defineEmits(['update:question', 'update:messages'])
           class="delete-btn"
           @click="clearInput('question')"
         >
-          削除
+          ×
         </button>
       </div>
       <div class="form-group">
@@ -38,38 +49,19 @@ defineEmits(['update:question', 'update:messages'])
           class="delete-btn"
           @click="clearInput('messages')"
         >
-          削除
+          ×
         </button>
       </div>
     </form>
   </div>
 </template>
 
-<script>
-export default {
-  methods: {
-    clearInput(inputName) {
-      //削除ボタンを押したときの処理
-      this[inputName] = '';
-    },
-  },
-};
-</script>
-
 <style scoped>
-/* 全体のスタイル */
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  margin: 0;
-  padding: 0;
-}
 /* フォームのスタイル */
 form {
-  background-color: #ffffff;
   width: 500px;
   padding: 30px;
-  padding-bottom: 80px; /**ここで、ボタンがはみ出るかどうかの調整 */
+  padding-bottom: 35px; /**ここで、ボタンがはみ出るかどうかの調整 */
   margin-top: 50px;
   margin-left: auto;
   border-radius: 10px;
@@ -89,41 +81,30 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
-}
-textarea {
-  height: 200px;
+    height: 200px;
   resize: none;
 }
 /* スペース調整 */
+/* フォーム内の各グループを相対位置で配置 */
 .form-group {
+  position: relative;
   margin-bottom: 20px;
 }
-/* 送信ボタンのスタイル */
-button[type='submit'] {
-  float: right;
-  background-color: #007bff;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-button[type='submit']:hover {
-  background-color: #0056b3;
-}
+/* 削除ボタンを右上に配置 */
 .delete-btn {
-  background-color: #dc3545;
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateY(110%);
+  border-radius: 5px;
+  background-color: #484646;
   color: white;
   border: none;
-  border-radius: 5px;
-  padding: 5px 10px;
-  font-size: 12px;
   cursor: pointer;
-  float: right;
-  margin-bottom: 5px;
+}
+
+/* 削除ボタンにマウスオーバーしたときのスタイル */
+.delete-btn:hover {
+  background-color: #928f8f;
 }
 </style>

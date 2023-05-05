@@ -6,10 +6,12 @@ import {createWindow} from '/src/composables/ReturnWindow.js';
 <template>
   <form @submit.prevent="onSubmit">
     <div class="main">
-      <SendMessage />
+      <div>
+      <SendMessage v-model:question="question" v-model:messages="messages"/>
+      <button type="submit">Submit</button>
+      </div>
       <SetUpParm />
     </div>
-    <button type="submit">Submit</button>
   </form>
 </template>
 <script>
@@ -17,6 +19,12 @@ export default {
   components: {
     SendMessage,
     SetUpParm,
+  },
+  data() {
+    return {
+      question: '',
+      messages: '',
+    }
   },
   methods: {
     onSubmit() {
@@ -69,6 +77,9 @@ export default {
 </script>
 
 <style>
+from{
+  background-color: #ffffff;
+}
 .main {
   display: flex;
   flex-direction: row;
@@ -98,5 +109,23 @@ export default {
   width:500px;
   height:500px;
 }
-
+/* 送信ボタンのスタイル */
+button[type='submit'] {
+  width: fit-content;
+  height: fit-content;
+  transform: translateX(424%) translateY(-160%);
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+button[type='submit']:hover {
+  background-color: #0056b3;
+}
 </style>
