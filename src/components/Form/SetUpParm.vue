@@ -1,3 +1,159 @@
+<script setup>
+defineProps({
+  apiKey: String,
+  model: String,
+  temperature: String,
+  top_p: String,
+  n: String,
+  stop: String,
+  max_tokens: String,
+  presence_penalty: String,
+  frequency_penalty: String,
+  logit_bias: String,
+});
+
+defineEmits([
+  'update:apiKey',
+  'update:model',
+  'update:temperature',
+  'update:top_p',
+  'update:n',
+  'update:stop',
+  'update:max_tokens',
+  'update:presence_penalty',
+  'update:frequency_penalty',
+  'update:logit_bias',
+]);
+</script>
+
+<template>
+  <div id="app">
+    <form>
+      <h3>Parameter</h3>
+      <div class="form-group">
+        <label for="apiKey">API_KEY:</label>
+        <input
+          type="password"
+          id="apiKey"
+          :value="apiKey"
+          @input="$emit('update:apiKey', $event.target.value)"
+          placeholder="Please input your API_KEY."
+        />
+      </div>
+      <div class="form-group">
+        <label for="model" class="form-label">model:</label>
+        <select
+          id="model"
+          class="form-select"
+          v-model="model"
+          :value="model"
+          @input="$emit('update:model', $event.target.value)"
+        >
+          <option disabled value="">Please choose</option>
+          <option
+            v-for="option in options"
+            :key="option.value"
+            :value="option.value"
+          >
+            {{ option.text }}
+          </option>
+        </select>
+      </div>
+      <div class="form-change">
+        <label for="temperature">temperature:</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="temperature"
+            name="temperature"
+            :value="temperature"
+            @input="$emit('update:temperature', $event.target.value)"
+            class="input-field"
+            placeholder="Please input number, 0~2"
+          />
+        </div>
+        <label for="top_p">top_p:</label>
+        <div class="input-wrapper">
+          <input
+            type="text"
+            id="top_p"
+            name="top_p"
+            :value="top_p"
+            @input="$emit('update:top_p', $event.target.value)"
+            class="input-field"
+            placeholder="Please input number, 0~1"
+          />
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="n">n:</label>
+        <input
+          type="text"
+          id="n"
+          name="n"
+          :value="n"
+          @input="$emit('update:n', $event.target.value)"
+          placeholder="Please input integer"
+        />
+      </div>
+      <div class="form-group">
+        <label for="stop">stop:</label>
+        <input
+          type="text"
+          id="stop"
+          name="stop"
+          :value="stop"
+          @input="$emit('update:stop', $event.target.value)"
+          placeholder="未調整"
+        />
+      </div>
+      <div class="form-group">
+        <label for="max_tokens">max_tokens</label>
+        <input
+          type="text"
+          id="max_tokens"
+          name="max_tokens"
+          :value="max_tokens"
+          @input="$emit('update:max_tokens', $event.target.value)"
+          placeholder=" Maximum value of 4096"
+        />
+      </div>
+      <div class="form-group">
+        <label for="presence_penalty">presence_penalty:</label>
+        <input
+          type="text"
+          id="presence_penalty"
+          name="presence_penalty"
+          :value="presence_penalty"
+          @input="$emit('update:presence_penalty', $event.target.value)"
+          placeholder="Please input number, -2.0~2.0"
+        />
+      </div>
+      <div class="form-group">
+        <label for="frequency_penalty">frequency_penalty:</label>
+        <input
+          type="text"
+          id="frequency_penalty"
+          name="frequency_penalty"
+          :value="frequency_penalty"
+          @input="$emit('update:frequency_penalty', $event.target.value)"
+          placeholder="Please input number, -2.0~2.0"
+        />
+      </div>
+      <div class="form-group">
+        <label for="logit_bias">logit_bias:</label>
+        <input
+          type="text"
+          id="logit_bias"
+          name="logit_bias"
+          :value="logit_bias"
+          @input="$emit('update:logit_bias', $event.target.value)"
+          placeholder="未調整"
+        />
+      </div>
+    </form>
+  </div>
+</template>
 <script>
 import { ref } from 'vue';
 const model = ref('');
@@ -12,7 +168,7 @@ export default {
         { value: 'gpt-4', text: 'gpt-4' },
       ],
       showTemperatureInput: true,
-      temperature: '0',//デプロイ時は、''にする
+      temperature: '0', //デプロイ時は、''にする
       top_p: '',
       n: '',
       stop: '',
@@ -22,127 +178,8 @@ export default {
       logit_bias: '',
     };
   },
-  methods: {
-    toggleInput() {
-      this.showTemperatureInput = !this.showTemperatureInput;
-    },
-  },
 };
 </script>
-
-<template>
-  <div id="app">
-    <form>
-      <h3>Parameter</h3>
-      <div class="form-group">
-        <label for="api-key">API_KEY:</label>
-        <input
-          type="password"
-          id="api-key"
-          name="api-key"
-          v-model="apiKey"
-          placeholder="Please input your API_KEY."
-        />
-      </div>
-      <div class="form-group">
-        <label for="model" class="form-label">model:</label>
-        <select id="model" class="form-select" v-model="model">
-          <option disabled value="">Please choose</option>
-          <option
-            v-for="option in options"
-            :key="option.value"
-            :value="option.value"
-          >
-            {{ option.text }}
-          </option>
-        </select>
-      </div>
-      <div class="form-change">
-        <div class="form-group" v-if="showTemperatureInput">
-          <label for="temperature">temperature:</label>
-          <div class="input-wrapper">
-            <input
-              type="text"
-              id="temperature"
-              name="temperature"
-              v-model="temperature"
-              class="input-field"
-              placeholder="Please input number, 0~2"
-            />
-            <button class="change-btn" type="button" @click="toggleInput">
-              変更
-            </button>
-          </div>
-        </div>
-        <div class="form-group" v-else>
-          <label for="top_p">top_p:</label>
-          <div class="input-wrapper">
-            <input
-              type="text"
-              id="top_p"
-              name="top_p"
-              v-model="top_p"
-              class="input-field"
-              placeholder="Please input number, 0~1"
-            />
-            <button class="change-btn" type="button" @click="toggleInput">
-              変更
-            </button>
-          </div>
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="n">n:</label>
-        <input type="text" id="n" name="n" v-model="n" placeholder="Please input integer" />
-      </div>
-      <div class="form-group">
-        <label for="stop">stop:</label>
-        <input type="text" id="stop" name="stop" v-model="stop" placeholder="未調整"/>
-      </div>
-      <div class="form-group">
-        <label for="max_tokens">max_tokens</label>
-        <input
-          type="text"
-          id="max_tokens"
-          name="max_tokens"
-          v-model="max_tokens"
-          placeholder=" Maximum value of 4096"
-        />
-      </div>
-      <div class="form-group">
-        <label for="presence_penalty">presence_penalty:</label>
-        <input
-          type="text"
-          id="presence_penalty"
-          name="presence_penalty"
-          v-model="presence_penalty"
-          placeholder="Please input number, -2.0~2.0"
-        />
-      </div>
-      <div class="form-group">
-        <label for="frequency_penalty">frequency_penalty:</label>
-        <input
-          type="text"
-          id="frequency_penalty"
-          name="frequency_penalty"
-          v-model="frequency_penalty"
-          placeholder="Please input number, -2.0~2.0"
-        />
-      </div>
-      <div class="form-group">
-        <label for="logit_bias">logit_bias:</label>
-        <input
-          type="text"
-          id="logit_bias"
-          name="logit_bias"
-          v-model="logit_bias"
-          placeholder="未調整"
-        />
-      </div>
-    </form>
-  </div>
-</template>
-
 <style scoped>
 /* 全体のスタイル */
 body {
