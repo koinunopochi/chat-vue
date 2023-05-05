@@ -1,11 +1,12 @@
 <template>
-  <h1 class="title">ChatGPT:簡易利用</h1>
+  <h1 class="title">ChatGPT</h1>
 </template>
 
 <style scoped>
   .title {
     width: 100%;
-    background-color: #e3f2fd;
+    background-color: #191a1b;
+    color: rgb(255, 255, 255);
     text-align: center;
     font-size: 32px;
     font-weight: bold;

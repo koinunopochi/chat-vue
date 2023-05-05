@@ -59,6 +59,7 @@ export default defineComponent({
 <style scoped>
 /* フォームのスタイル */
 form {
+  background-color: #fff;
   width: 500px;
   padding: 30px;
   padding-bottom: 35px; /**ここで、ボタンがはみ出るかどうかの調整 */

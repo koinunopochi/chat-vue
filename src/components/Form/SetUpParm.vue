@@ -1,3 +1,4 @@
+
 <script setup>
 defineProps({
   apiKey: String,
@@ -172,6 +173,7 @@ export default {
 <style scoped>
 /* フォームのスタイル */
 form {
+  background-color: #fff;
   width: 300px;
   padding: 30px;
   padding-bottom: 30px; /**ここで、ボタンがはみ出るかどうかの調整 */

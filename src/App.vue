@@ -18,6 +18,7 @@ import MainForm from './components/Form/MainForm.vue';
 </template>
 <style>
 .wrap{
+  background-color: #caf997;
   align-items: center;
 }
 .main{
