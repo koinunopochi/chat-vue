@@ -45,7 +45,6 @@ defineEmits([
         <select
           id="model"
           class="form-select"
-          v-model="model"
           :value="model"
           @input="$emit('update:model', $event.target.value)"
         >
@@ -100,7 +99,7 @@ defineEmits([
         <label for="stop">stop:</label>
         <input
           type="text"
-          id="stop"
+          id="stop_"
           name="stop"
           :value="stop"
           @input="$emit('update:stop', $event.target.value)"
@@ -156,26 +155,16 @@ defineEmits([
 </template>
 <script>
 import { ref } from 'vue';
-const model = ref('');
-
+const model = ref('gpt-3.5-turbo');
+const temperature = ref('0'); //デプロイ時は、''にする
+//const stop = ref('');
 export default {
   data() {
     return {
-      apiKey: '',
-      model: 'gpt-3.5-turbo',
       options: [
         { value: 'gpt-3.5-turbo', text: 'gpt-3.5-turbo' },
         { value: 'gpt-4', text: 'gpt-4' },
       ],
-      showTemperatureInput: true,
-      temperature: '0', //デプロイ時は、''にする
-      top_p: '',
-      n: '',
-      stop: '',
-      max_tokens: '',
-      presence_penalty: '',
-      frequency_penalty: '',
-      logit_bias: '',
     };
   },
 };
@@ -240,28 +229,5 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
-}
-/**変更ボタン */
-/**変更ボタンを入力ボックス内に入れる */
-.input-wrapper {
-  position: relative;
-}
-.input-field {
-  width: calc(100% - 50px); /* ボタンの幅と余白を考慮 */
-}
-.change-btn {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  background-color: #35dc6a;
-  color: white;
-  border: none;
-  border-radius: 5px;
-  padding: 7px 10px;
-  font-size: 12px;
-  cursor: pointer;
-  float: right;
-  margin-bottom: 5px;
 }
 </style>

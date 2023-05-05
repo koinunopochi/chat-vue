@@ -30,7 +30,6 @@ defineEmits(['update:question', 'update:messages'])
         <label for="messages">messages:</label>
         <textarea
           id="messages"
-          name="messages"
           :value="messages"
           @input="$emit('update:messages', $event.target.value)"
         ></textarea>
@@ -48,16 +47,7 @@ defineEmits(['update:question', 'update:messages'])
 
 <script>
 export default {
-  data() {
-    return {
-      question: '',
-      messages: '',
-    };
-  },
   methods: {
-    emitInput(identifier, value) {
-      this.$emit('inputChange', { identifier, value });
-    },
     clearInput(inputName) {
       //削除ボタンを押したときの処理
       this[inputName] = '';

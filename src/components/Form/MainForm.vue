@@ -1,30 +1,12 @@
 <script setup>
 import SendMessage from './SendMessage.vue';
 import SetUpParm from './SetUpParm.vue';
-import { ref } from 'vue';
-
-const question = ref('');
-const messages = ref('');
-const apiKey = ref('');
-//const model = ref('gpt-3.5-turbo');
-const temperature = ref('');
 </script>
 <template>
   <form @submit.prevent="onSubmit">
     <div class="main">
-      <SendMessage v-model:question="question" v-model:messages="messages" />
-      <SetUpParm
-        v-model:apiKey="apiKey"
-        v-model:model="model"
-        v-model:temperature="temperature"
-        v-model:top_p="top_p"
-        v-model:n="n"
-        v-model:stop="stop"
-        v-model:max_tokens="max_tokens"
-        v-model:presence_penalty="presence_penalty"
-        v-model:frequency_penalty="frequency_penalty"
-        v-model:logit_bias="logit_bias"
-      />
+      <SendMessage />
+      <SetUpParm />
     </div>
     <button type="submit">Submit</button>
   </form>
@@ -43,13 +25,13 @@ export default {
         model: model.value,
         messages: `${question.value}${messages.value}`,
         temperature: temperature.value,
-        top_p: this.top_p,
-        n: this.n,
-        stop: this.stop,
-        max_tokens: this.max_tokens,
-        presence_penalty: this.presence_penalty,
-        frequency_penalty: this.frequency_penalty,
-        logit_bias: this.logit_bias,
+        top_p: top_p.value,
+        n: n.value,
+        stop: stop_.value /*TODO:【解決】なぜかstopのみ反応していない確認する,【func,stopがあるためstopが競合してしまっていた*/,
+        max_tokens: max_tokens.value,
+        presence_penalty: presence_penalty.value,
+        frequency_penalty: frequency_penalty.value,
+        logit_bias: logit_bias.value,
       };
 
       console.log(postData);
