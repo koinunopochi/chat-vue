@@ -1,6 +1,7 @@
 <script setup>
 import SendMessage from './SendMessage.vue';
 import SetUpParm from './SetUpParm.vue';
+import {createWindow} from '/src/composables/ReturnWindow.js';
 </script>
 <template>
   <form @submit.prevent="onSubmit">
@@ -55,7 +56,7 @@ export default {
         .then((data) => {
           const notificationSound = new Audio('/public/endsound.mp3');
           //notificationSound.play();
-          alert(JSON.stringify(data, null, 2));
+          createWindow(data);
           console.log(data);
         })
         .catch((error) => {
@@ -73,4 +74,25 @@ export default {
   flex-direction: row;
   justify-content: center;
 }
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 999;
+}
+
+.custom-alert {
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  background-color: white;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+}
+
 </style>
