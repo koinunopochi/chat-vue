@@ -55,7 +55,7 @@ export default {
         })
         .then((data) => {
           const notificationSound = new Audio('/public/endsound.mp3');
-          //notificationSound.play();
+          notificationSound.play();
           createWindow(data);
           console.log(data);
         })
@@ -93,6 +93,10 @@ export default {
   background-color: white;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
+}
+#textToCopy{
+  width:500px;
+  height:500px;
 }
 
 </style>
