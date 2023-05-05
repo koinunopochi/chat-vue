@@ -1,17 +1,17 @@
 <script setup>
 import TheHeader from './components/TheHeader.vue';
 import TheFooter from './components/TheFooter.vue';
-import SetUpParm from './components/SetUpParm.vue';
-import SendMessage from './components/SendMessage.vue';
+
 import TwitterEmbedded from './components/TwitterEmbedded.vue';
+
+import MainForm from './components/Form/MainForm.vue';
 </script>
 <template>
   <div class="wrap">
     <TheHeader />
     <div class="main">
       <TwitterEmbedded />
-      <SendMessage />
-      <SetUpParm />
+      <MainForm />
     </div>
     <TheFooter />
   </div>

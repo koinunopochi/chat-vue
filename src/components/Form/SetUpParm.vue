@@ -5,8 +5,6 @@ const model = ref('');
 export default {
   data() {
     return {
-      question: '',
-      messages: '',
       apiKey: '',
       model: 'gpt-3.5-turbo',
       options: [
