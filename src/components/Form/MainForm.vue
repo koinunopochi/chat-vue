@@ -29,6 +29,8 @@ export default {
   methods: {
     onSubmit() {
       //送信ボタンを押したときの処理
+                const notificationSound = new Audio('/public/endsound.mp3');
+          notificationSound.play();
       const postData = {
         API_KEY: apiKey.value,
         model: model.value,
@@ -45,7 +47,8 @@ export default {
 
       console.log(postData);
 
-      fetch('http://localhost:3000/api/text/judge', {
+      fetch('https://api-v1-r0fc.onrender.com/api/text/judge', {
+        //'http://localhost:3000/api/text/judge'
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -62,7 +65,7 @@ export default {
           }
         })
         .then((data) => {
-          const notificationSound = new Audio('/public/endsound.mp3');
+         
           notificationSound.play();
           createWindow(data);
           console.log(data);
