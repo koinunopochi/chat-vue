@@ -47,7 +47,7 @@ export default {
 
       console.log(postData);
 
-      fetch('https://api-v1-r0fc.onrender.com/api/text/judge', {
+      fetch('https://koinunopochi-api.onrender.com/api/text/judge', {
         //'http://localhost:3000/api/text/judge'
         method: 'POST',
         headers: {
