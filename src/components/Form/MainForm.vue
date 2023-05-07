@@ -1,6 +1,6 @@
 <script setup>
 import SendMessage from './SendMessage.vue';
-import SetUpParm from './SetUpParm.vue';
+import SetUpParm from './partOfParm/SetUpParm.vue';
 import {createWindow} from '/src/composables/ReturnWindow.js';
 </script>
 <template>
@@ -29,8 +29,8 @@ export default {
   methods: {
     onSubmit() {
       //送信ボタンを押したときの処理
-                const notificationSound = new Audio('/public/endsound.mp3');
-          notificationSound.play();
+      const notificationSound = new Audio('./public/endsound.mp3');
+      notificationSound.play();
       const postData = {
         API_KEY: apiKey.value,
         model: model.value,
