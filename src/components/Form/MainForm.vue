@@ -4,11 +4,11 @@ import SetUpParm from './partOfParm/SetUpParm.vue';
 import {createWindow} from '/src/composables/ReturnWindow.js';
 </script>
 <template>
-  <form @submit.prevent="onSubmit">
+  <form @form-data="handleFormData">
     <div class="main">
       <div>
       <SendMessage v-model:question="question" v-model:messages="messages"/>
-      <button type="submit">Submit</button>
+            <button type="submit">Submit</button>
       </div>
       <SetUpParm />
     </div>
@@ -27,7 +27,12 @@ export default {
     }
   },
   methods: {
-    onSubmit() {
+    handleFormData(data) {
+      this.formData = data;
+    },
+    submit() {
+      console.log('Combined form data:', this.formData);
+
       //送信ボタンを押したときの処理
       const notificationSound = new Audio('./public/endsound.mp3');
       notificationSound.play();

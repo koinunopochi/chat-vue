@@ -78,15 +78,10 @@ export default {
 };
 </script>
 
+
 <style scoped>
 .slider-container {
   display: flex;
   align-items: center;
 }
 </style>
-
-
-
-
-
-

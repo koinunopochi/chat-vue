@@ -1,32 +1,3 @@
-<script setup>
-import SliderContainerVue from './SliderContainer.vue';
-defineProps({
-  apiKey: String,
-  model: String,
-  temperature: String,
-  top_p: String,
-  n: String,
-  stop: String,
-  max_tokens: String,
-  presence_penalty: String,
-  frequency_penalty: String,
-  logit_bias: String,
-});
-
-defineEmits([
-  'update:apiKey',
-  'update:model',
-  'update:temperature',
-  'update:top_p',
-  'update:n',
-  'update:stop',
-  'update:max_tokens',
-  'update:presence_penalty',
-  'update:frequency_penalty',
-  'update:logit_bias',
-]);
-</script>
-
 <template>
   <div id="app">
     <form>
@@ -59,43 +30,6 @@ defineEmits([
           </option>
         </select>
       </div>
-      <div class="form-change">
-        <label for="temperature">temperature:</label>
-        <div class="input-wrapper">
-          <input
-            type="text"
-            id="temperature"
-            name="temperature"
-            :value="temperature"
-            @input="$emit('update:temperature', $event.target.value)"
-            class="input-field"
-            placeholder="Please input number, 0~2"
-          />
-        </div>
-        <label for="top_p">top_p:</label>
-        <div class="input-wrapper">
-          <input
-            type="text"
-            id="top_p"
-            name="top_p"
-            :value="top_p"
-            @input="$emit('update:top_p', $event.target.value)"
-            class="input-field"
-            placeholder="Please input number, 0~1"
-          />
-        </div>
-      </div>
-      <div class="form-group">
-        <label for="n">n:</label>
-        <input
-          type="text"
-          id="n"
-          name="n"
-          :value="n"
-          @input="$emit('update:n', $event.target.value)"
-          placeholder="Please input integer"
-        />
-      </div>
       <div class="form-group">
         <label for="stop">stop:</label>
         <input
@@ -105,39 +39,6 @@ defineEmits([
           :value="stop"
           @input="$emit('update:stop', $event.target.value)"
           placeholder="未調整"
-        />
-      </div>
-      <div class="form-group">
-        <label for="max_tokens">max_tokens</label>
-        <input
-          type="text"
-          id="max_tokens"
-          name="max_tokens"
-          :value="max_tokens"
-          @input="$emit('update:max_tokens', $event.target.value)"
-          placeholder=" Maximum value of 4096"
-        />
-      </div>
-      <div class="form-group">
-        <label for="presence_penalty">presence_penalty:</label>
-        <input
-          type="text"
-          id="presence_penalty"
-          name="presence_penalty"
-          :value="presence_penalty"
-          @input="$emit('update:presence_penalty', $event.target.value)"
-          placeholder="Please input number, -2.0~2.0"
-        />
-      </div>
-      <div class="form-group">
-        <label for="frequency_penalty">frequency_penalty:</label>
-        <input
-          type="text"
-          id="frequency_penalty"
-          name="frequency_penalty"
-          :value="frequency_penalty"
-          @input="$emit('update:frequency_penalty', $event.target.value)"
-          placeholder="Please input number, -2.0~2.0"
         />
       </div>
       <div class="form-group">
@@ -166,44 +67,63 @@ defineEmits([
   </div>
 </template>
 <script>
+import SliderContainerVue from './SliderContainer.vue';
 import { ref } from 'vue';
-const model = ref('gpt-3.5-turbo');
-const temperature = ref('0'); //デプロイ時は、''にする
-//const stop = ref('');
+
 export default {
   components: {
     SliderContainerVue,
   },
+  props: {
+    apiKey: String,
+    model: String,
+    stop: String,
+    logit_bias: String,
+  },
+  emits: ['update:apiKey', 'update:model', 'update:stop', 'update:logit_bias'],
   data() {
     return {
       options: [
         { value: 'gpt-3.5-turbo', text: 'gpt-3.5-turbo' },
         { value: 'gpt-4', text: 'gpt-4' },
       ],
-      parmName: [
-        'temperature',
-        'top_p',
-        'n',
-        'max_tokens',
-        'presence_penalty',
-        'frequency_penalty',
-      ],
-      sliderValues: [0.5, 1, 1, 4096, 0, 0],
-      sliderRanges: [
-        { min: 0, max: 2, step: 0.001 },
-        { min: 0, max: 2, step: 0.001 },
-        { min: 1, max: 10, step: 1 },
-        { min: 1, max: 4096, step: 1 },
-        { min: -2, max: 2, step: 0.001 },
-        { min: -2, max: 2, step: 0.001 },
-      ],
-      showIntValues: [false, false, true, true, false, false],
     };
   },
-  methods: {
-    updateSliderValue(index, value) {
-      this.$set(this.sliderValues, index, value);
-    },
+  setup(props, { emit }) {
+    const model = ref(props.model);
+
+    const parmName = [
+      'temperature',
+      'top_p',
+      'n',
+      'max_tokens',
+      'presence_penalty',
+      'frequency_penalty',
+    ];
+    const sliderValues = [0.5, 1, 1, 4096, 0, 0];
+    const sliderRanges = [
+      { min: 0, max: 2, step: 0.001 },
+      { min: 0, max: 2, step: 0.001 },
+      { min: 1, max: 10, step: 1 },
+      { min: 1, max: 4096, step: 1 },
+      { min: -2, max: 2, step: 0.001 },
+      { min: -2, max: 2, step: 0.001 },
+    ];
+    const showIntValues = [false, false, true, true, false, false];
+
+    const updateSliderValue = (index, value) => {
+      sliderValues[index] = value;
+      emit(`update:${parmName[index]}`, value);
+    };
+
+    return {
+      model,
+      parmName,
+      sliderValues,
+      sliderRanges,
+      showIntValues,
+      updateSliderValue,
+    };
   },
 };
 </script>
