@@ -1,16 +1,27 @@
 <script setup>
 import SendMessage from './SendMessage.vue';
 import SetUpParm from './partOfParm/SetUpParm.vue';
-import {createWindow} from '/src/composables/ReturnWindow.js';
+import { createWindow } from '/src/composables/ReturnWindow.js';
 </script>
 <template>
-  <form @form-data="handleFormData">
+  <form @submit="submit">
     <div class="main">
       <div>
-      <SendMessage v-model:question="question" v-model:messages="messages"/>
-            <button type="submit">Submit</button>
+        <SendMessage v-model:question="question" v-model:messages="messages" />
+        <button type="submit">Submit</button>
       </div>
-      <SetUpParm />
+      <SetUpParm
+        v-model:apiKey="apiKey"
+        v-model:model="model"
+        v-model:stop="stop"
+        v-model:logit_bias="logit_bias"
+        v-model:temperature="temperature"
+        v-model:top_p="top_p"
+        v-model:n="n"
+        v-model:max_tokens="max_tokens"
+        v-model:presence_penalty="presence_penalty"
+        v-model:frequency_penalty="frequency_penalty"
+      />
     </div>
   </form>
 </template>
@@ -24,30 +35,41 @@ export default {
     return {
       question: '',
       messages: '',
-    }
+      apiKey: '',
+      model: 'gpt-3.5-turbo',
+      stop: '',
+      logit_bias: '',
+      temperature: 0.5,
+      top_p: 1,
+      n: 1,
+      max_tokens: 4096,
+      presence_penalty: 0,
+      frequency_penalty: 0,
+    };
   },
   methods: {
     handleFormData(data) {
       this.formData = data;
     },
-    submit() {
+    submit(event) {
+      event.preventDefault();
       console.log('Combined form data:', this.formData);
 
       //送信ボタンを押したときの処理
       const notificationSound = new Audio('./public/endsound.mp3');
       notificationSound.play();
       const postData = {
-        API_KEY: apiKey.value,
-        model: model.value,
-        messages: `${question.value}${messages.value}`,
-        temperature: temperature.value,
-        top_p: top_p.value,
-        n: n.value,
-        stop: stop_.value /*TODO:【解決】なぜかstopのみ反応していない確認する,【func,stopがあるためstopが競合してしまっていた*/,
-        max_tokens: max_tokens.value,
-        presence_penalty: presence_penalty.value,
-        frequency_penalty: frequency_penalty.value,
-        logit_bias: logit_bias.value,
+        API_KEY: this.apiKey,
+        model: this.model,
+        messages: `${this.question}${this.messages}`,
+        temperature: this.temperature,
+        top_p: this.top_p,
+        n: this.n,
+        stop: this.stop,
+        max_tokens: this.max_tokens,
+        presence_penalty: this.presence_penalty,
+        frequency_penalty: this.frequency_penalty,
+        logit_bias: this.logit_bias,
       };
 
       console.log(postData);
@@ -70,7 +92,6 @@ export default {
           }
         })
         .then((data) => {
-         
           notificationSound.play();
           createWindow(data);
           console.log(data);
@@ -85,7 +106,7 @@ export default {
 </script>
 
 <style>
-from{
+from {
   background-color: #ffffff;
 }
 .main {
@@ -113,9 +134,9 @@ from{
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
   z-index: 1000;
 }
-#textToCopy{
-  width:500px;
-  height:500px;
+#textToCopy {
+  width: 500px;
+  height: 500px;
 }
 /* 送信ボタンのスタイル */
 button[type='submit'] {

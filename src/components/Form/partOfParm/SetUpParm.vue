@@ -1,7 +1,6 @@
 <template>
-  <div id="app">
-    <form>
-      <h3>Parameter</h3>
+  <div>
+<h3>Parameter</h3>
       <div class="form-group">
         <label for="apiKey">API_KEY:</label>
         <input
@@ -63,8 +62,8 @@
           @input="updateSliderValue(index, $event)"
         />
       </div>
-    </form>
   </div>
+      
 </template>
 <script>
 import SliderContainerVue from './SliderContainer.vue';

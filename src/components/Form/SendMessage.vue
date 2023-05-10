@@ -18,41 +18,29 @@ export default defineComponent({
 </script>
 
 <template>
-  <div id="app">
-    <form>
-      <h3>メッセージの設定</h3>
-      <div class="form-group">
-        <label for="question">question:</label>
-        <textarea
-          id="question"
-          name="question"
-          :value="question"
-          @input="$emit('update:question', $event.target.value)"
-        ></textarea>
-        <button
-          type="button"
-          class="delete-btn"
-          @click="clearInput('question')"
-        >
-          ×
-        </button>
-      </div>
-      <div class="form-group">
-        <label for="messages">messages:</label>
-        <textarea
-          id="messages"
-          :value="messages"
-          @input="$emit('update:messages', $event.target.value)"
-        ></textarea>
-        <button
-          type="button"
-          class="delete-btn"
-          @click="clearInput('messages')"
-        >
-          ×
-        </button>
-      </div>
-    </form>
+  <h3>メッセージの設定</h3>
+  <div class="form-group">
+    <label for="question">question:</label>
+    <textarea
+      id="question"
+      name="question"
+      :value="question"
+      @input="$emit('update:question', $event.target.value)"
+    ></textarea>
+    <button type="button" class="delete-btn" @click="clearInput('question')">
+      ×
+    </button>
+  </div>
+  <div class="form-group">
+    <label for="messages">messages:</label>
+    <textarea
+      id="messages"
+      :value="messages"
+      @input="$emit('update:messages', $event.target.value)"
+    ></textarea>
+    <button type="button" class="delete-btn" @click="clearInput('messages')">
+      ×
+    </button>
   </div>
 </template>
 
@@ -82,7 +70,7 @@ textarea {
   border: 1px solid #ccc;
   border-radius: 5px;
   font-size: 14px;
-    height: 200px;
+  height: 200px;
   resize: none;
 }
 /* スペース調整 */
