@@ -18,6 +18,7 @@ export default defineComponent({
 </script>
 
 <template>
+  <div id="main-msg">
   <h3>メッセージの設定</h3>
   <div class="form-group">
     <label for="question">question:</label>
@@ -42,17 +43,17 @@ export default defineComponent({
       ×
     </button>
   </div>
+  </div>
 </template>
 
 <style scoped>
-/* フォームのスタイル */
-form {
-  background-color: #fff;
+#main-msg{
+  background-color: #d0f610;
   width: 500px;
   padding: 30px;
   padding-bottom: 35px; /**ここで、ボタンがはみ出るかどうかの調整 */
-  margin-top: 50px;
-  margin-left: auto;
+  margin-top: 20px;
+  margin-right: 10px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }

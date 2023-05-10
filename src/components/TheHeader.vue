@@ -1,5 +1,5 @@
 <template>
-  <h1 class="title">ChatGPT</h1>
+  <h1 class="title">ChatGPT:Easy-set-parameter</h1>
 </template>
 
 <style scoped>

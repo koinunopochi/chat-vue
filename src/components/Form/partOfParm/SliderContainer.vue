@@ -57,9 +57,10 @@ export default {
     },
   },
   methods: {
-    updateValue() {
-      this.$emit("input", this.internalValue / 1000);
+updateValue() {
+      this.$emit("update:model", this.internalValue / 1000);  // change "input" to "update:model"
     },
+
   },
   watch: {
     value(newValue) {

@@ -5,6 +5,7 @@ import { createWindow } from '/src/composables/ReturnWindow.js';
 </script>
 <template>
   <form @submit="submit">
+    <h2>Easy set up</h2>
     <div class="main">
       <div>
         <SendMessage v-model:question="question" v-model:messages="messages" />
@@ -33,6 +34,7 @@ export default {
   },
   data() {
     return {
+      //これの追加により、データを受け取ることができるようになった
       question: '',
       messages: '',
       apiKey: '',
@@ -53,7 +55,6 @@ export default {
     },
     submit(event) {
       event.preventDefault();
-      console.log('Combined form data:', this.formData);
 
       //送信ボタンを押したときの処理
       const notificationSound = new Audio('./public/endsound.mp3');
@@ -75,7 +76,7 @@ export default {
       console.log(postData);
 
       fetch('https://koinunopochi-api.onrender.com/api/text/judge', {
-        //'http://localhost:3000/api/text/judge'
+      //fetch('http://localhost:3000/api/text/judge',{
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -106,8 +107,19 @@ export default {
 </script>
 
 <style>
-from {
-  background-color: #ffffff;
+/* フォームのスタイル */
+form {
+  background-color: #fff;
+  width: auto;
+  padding: 30px;
+  padding-bottom: 35px; /**ここで、ボタンがはみ出るかどうかの調整 */
+  margin-top: 50px;
+  border-radius: 10px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
 }
 .main {
   display: flex;

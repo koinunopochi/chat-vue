@@ -1,69 +1,68 @@
 <template>
-  <div>
-<h3>Parameter</h3>
-      <div class="form-group">
-        <label for="apiKey">API_KEY:</label>
-        <input
-          type="password"
-          id="apiKey"
-          :value="apiKey"
-          @input="$emit('update:apiKey', $event.target.value)"
-          placeholder="Please input your API_KEY."
-        />
-      </div>
-      <div class="form-group">
-        <label for="model" class="form-label">model:</label>
-        <select
-          id="model"
-          class="form-select"
-          :value="model"
-          @input="$emit('update:model', $event.target.value)"
+  <div id="main-parm">
+    <h3>Parameter</h3>
+    <div class="form-group">
+      <label for="apiKey">API_KEY:</label>
+      <input
+        type="password"
+        id="apiKey"
+        :value="apiKey"
+        @input="$emit('update:apiKey', $event.target.value)"
+        placeholder="Please input your API_KEY."
+      />
+    </div>
+    <div class="form-group">
+      <label for="model" class="form-label">model:</label>
+      <select
+        id="model"
+        class="form-select"
+        :value="model"
+        @input="$emit('update:model', $event.target.value)"
+      >
+        <option disabled value="">Please choose</option>
+        <option
+          v-for="option in options"
+          :key="option.value"
+          :value="option.value"
         >
-          <option disabled value="">Please choose</option>
-          <option
-            v-for="option in options"
-            :key="option.value"
-            :value="option.value"
-          >
-            {{ option.text }}
-          </option>
-        </select>
+          {{ option.text }}
+        </option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="stop">stop:</label>
+      <input
+        type="text"
+        id="stop_"
+        name="stop"
+        :value="stop"
+        @input="$emit('update:stop', $event.target.value)"
+        placeholder="未調整"
+      />
+    </div>
+    <div class="form-group">
+      <label for="logit_bias">logit_bias:</label>
+      <input
+        type="text"
+        id="logit_bias"
+        name="logit_bias"
+        :value="logit_bias"
+        @input="$emit('update:logit_bias', $event.target.value)"
+        placeholder="未調整"
+      />
+    </div>
+        <div v-for="(value, index) in sliderValues" :key="index">
+          <label>{{ parmName[index] }}:</label>
+          <SliderContainerVue
+            :value="sliderValues[index]"
+            :min-value="sliderRanges[index].min"
+            :max-value="sliderRanges[index].max"
+            :step-value="sliderRanges[index].step"
+            :show-int="showIntValues[index]"
+            @update:model="updateSliderValue(index, $event)"
+          />
+        </div>
       </div>
-      <div class="form-group">
-        <label for="stop">stop:</label>
-        <input
-          type="text"
-          id="stop_"
-          name="stop"
-          :value="stop"
-          @input="$emit('update:stop', $event.target.value)"
-          placeholder="未調整"
-        />
-      </div>
-      <div class="form-group">
-        <label for="logit_bias">logit_bias:</label>
-        <input
-          type="text"
-          id="logit_bias"
-          name="logit_bias"
-          :value="logit_bias"
-          @input="$emit('update:logit_bias', $event.target.value)"
-          placeholder="未調整"
-        />
-      </div>
-      <div v-for="(value, index) in sliderValues" :key="index">
-        <label>{{ parmName[index] }}:</label>
-        <SliderContainerVue
-          :value="sliderValues[index]"
-          :min-value="sliderRanges[index].min"
-          :max-value="sliderRanges[index].max"
-          :step-value="sliderRanges[index].step"
-          :show-int="showIntValues[index]"
-          @input="updateSliderValue(index, $event)"
-        />
-      </div>
-  </div>
-      
 </template>
 <script>
 import SliderContainerVue from './SliderContainer.vue';
@@ -82,12 +81,14 @@ export default {
   emits: ['update:apiKey', 'update:model', 'update:stop', 'update:logit_bias'],
   data() {
     return {
+      isDivVisible: false,
       options: [
         { value: 'gpt-3.5-turbo', text: 'gpt-3.5-turbo' },
         { value: 'gpt-4', text: 'gpt-4' },
       ],
     };
   },
+
   setup(props, { emit }) {
     const model = ref(props.model);
 
@@ -99,7 +100,7 @@ export default {
       'presence_penalty',
       'frequency_penalty',
     ];
-    const sliderValues = [0.5, 1, 1, 4096, 0, 0];
+    const sliderValues = [0.8, 1, 1, 2000, 0, 0];
     const sliderRanges = [
       { min: 0, max: 2, step: 0.001 },
       { min: 0, max: 2, step: 0.001 },
@@ -127,14 +128,12 @@ export default {
 };
 </script>
 <style scoped>
-/* フォームのスタイル */
-form {
-  background-color: #fff;
-  width: 300px;
+#main-parm {
+  background-color: #d0f610;
+  width: 230px;
   padding: 30px;
-  padding-bottom: 30px; /**ここで、ボタンがはみ出るかどうかの調整 */
-  margin: 50px auto;
-  margin-left: 20px;
+  padding-bottom: 35px; /**ここで、ボタンがはみ出るかどうかの調整 */
+  margin-top: 20px;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
