@@ -44,7 +44,7 @@ export default {
       temperature: 0.5,
       top_p: 1,
       n: 1,
-      max_tokens: 4096,
+      max_tokens: 2000,
       presence_penalty: 0,
       frequency_penalty: 0,
     };
