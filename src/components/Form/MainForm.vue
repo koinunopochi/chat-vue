@@ -1,12 +1,16 @@
 <script setup>
 import SendMessage from './SendMessage.vue';
 import SetUpParm from './partOfParm/SetUpParm.vue';
+import ShowResponse from './ShowResponse.vue';
 import { createWindow } from '/src/composables/ReturnWindow.js';
 </script>
 <template>
   <form @submit="submit">
     <h2>Easy set up</h2>
     <div class="main">
+      <div>
+        <ShowResponse :fetchedData="fetchedData"/>
+      </div>
       <div>
         <SendMessage v-model:question="question" v-model:messages="messages" />
         <button type="submit">Submit</button>
@@ -31,6 +35,7 @@ export default {
   components: {
     SendMessage,
     SetUpParm,
+    ShowResponse,
   },
   data() {
     return {
@@ -47,6 +52,8 @@ export default {
       max_tokens: 2000,
       presence_penalty: 0,
       frequency_penalty: 0,
+
+      fetchedData: null,
     };
   },
   methods: {
@@ -96,6 +103,7 @@ export default {
           notificationSound.play();
           createWindow(data);
           console.log(data);
+          this.fetchedData = data;
         })
         .catch((error) => {
           console.error('エラーが発生しました:', error);
