@@ -10,9 +10,9 @@ import MainForm from './components/Form/MainForm.vue';
   <div class="wrap">
     <TheHeader />
     <div class="main">
-      <TwitterEmbedded />
       <MainForm />
     </div>
+    <TwitterEmbedded />
     <TheFooter />
   </div>
 </template>
