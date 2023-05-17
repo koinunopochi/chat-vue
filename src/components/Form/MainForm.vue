@@ -9,7 +9,7 @@ import { createWindow } from '/src/composables/ReturnWindow.js';
     <h2>Easy set up</h2>
     <div class="main">
       <div>
-        <ShowResponse :fetchedData="fetchedData"/>
+        <ShowResponse :fetchedData="fetchedData" :messages="msg"/>
       </div>
       <div>
         <SendMessage v-model:question="question" v-model:messages="messages" />
@@ -54,6 +54,7 @@ export default {
       frequency_penalty: 0,
 
       fetchedData: null,
+      msg: '',
     };
   },
   methods: {
@@ -79,7 +80,7 @@ export default {
         frequency_penalty: this.frequency_penalty,
         logit_bias: this.logit_bias,
       };
-
+      this.msg = postData.messages;
       console.log(postData);
 
       fetch('https://koinunopochi-api.onrender.com/api/text/judge', {
